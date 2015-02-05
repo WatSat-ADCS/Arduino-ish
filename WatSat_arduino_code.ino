@@ -71,9 +71,30 @@ void postRequest(){
   What to do when a "post" request is sent.
   For example, will post the voltage required to apply to magentorquers
   */
-  delay(100);
-  float a = Serial.parseFloat();
-  adjust(a);
+    delay(100);
+    int arguments[4];
+    String input = Serial.readString();
+    String dp = "";
+    int argind = 0;
+    // start at 1 b/c string always starts and ends with ( and ) respectively 
+    for (int i=1; i<input.length()-1; i++) {
+      if (input[i] != ','){
+        dp += input[i];
+      }
+      if (input[i+1] == ',' || input[i+1] == ')') {
+        Serial.println(dp);
+        arguments[argind] = dp.toInt();
+        dp = "";
+        argind ++;
+      }
+    }
+
+    for (int i = 0; i<4; i++) {
+      Serial.print(arguments[i]);
+    }
+    
+  // process input in the form '[1,1,1,1]'
+  adjust(arguments[0], arguments[1], arguments[2], arguments[3]);
 }
 
 void getRequest(){
@@ -133,23 +154,9 @@ void outputall(){
   Serial.print("\n");
 }
 
-void adjust(float mag){
- /* the value of mag will depend on the voltage required to be applied to the 
-    magnetorquers.
-      torquer | key
-      --------+--------
-        x     | mag 
-        y     | mag + 100
-        z     | mag + 200
-       red    | mag + 300
-  */
-  if (mag >= 300){
-    analogWrite(torred, (mag-300));
-  }else if (mag >= 200){
-    analogWrite(torz, (mag-200));
-  }else if (mag >= 100){
-    analogWrite(tory, (mag-100));
-  }else{
-    analogWrite(torx, mag);
-  }
+void adjust(float magx, float magy, float magz, float magred){
+  analogWrite(torred, magred);
+  analogWrite(torz, magz);
+  analogWrite(tory, magy);
+  analogWrite(torx, magx);
 }
