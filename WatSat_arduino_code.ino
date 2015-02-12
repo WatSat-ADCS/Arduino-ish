@@ -74,6 +74,7 @@ void postRequest(){
     delay(100);
     int arguments[4];
     String input = Serial.readString();
+    //verify valid string here (?)
     String dp = "";
     int argind = 0;
     // start at 1 b/c string always starts and ends with ( and ) respectively 
