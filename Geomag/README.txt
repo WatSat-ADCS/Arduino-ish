@@ -96,7 +96,7 @@ To run the program with command line arguments under Windows:
 -------------------------------------------------------------
 1) Click on <Start> <Programs> <Accessories> <Command Prompt>
 2) Change directory ('cd') to the folder containg geomag70.exe
-3) Run the program, e.g. 'geomag70.exe IGRF11.COF f in.txt out.txt'
+3) Run the program, e.g. 'geomag70.exe IGRF12.COF f orbit.txt orbit_out_IGRF12.txt'
 
 Contact:
 --------
